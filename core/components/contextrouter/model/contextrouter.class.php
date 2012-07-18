@@ -12,7 +12,7 @@ class ContextRouter {
      */
     function __construct(modX &$modx,array $config = array()) {
         $this->modx =& $modx;
-        $this->includeWww = $modx->getOption('includeWww', null, true);
+        $this->includeWww = $modx->getOption('contextrouter.includeWww', null, true);
         $this->config = $config;
     }
 
@@ -26,7 +26,7 @@ class ContextRouter {
     }
 
     public function buildRoutesCache() {
-        $defaultContext = $this->modx->getOption('defaultContext', null, 'web');
+        $defaultContext = $this->modx->getOption('contextrouter.defaultContext', null, 'web');
         if (!empty($defaultContext)) {
             $this->addToRoutesArray('default', $defaultContext, true);
         }

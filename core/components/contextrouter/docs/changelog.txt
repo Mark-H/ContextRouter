@@ -1,6 +1,7 @@
 ++  ContextRouter 1.1.0-pl
 ++  Released: 2012-07-18
 ++++++++++++++++++++++++++++
+(pl2) Fix unproperly prefixed system settings.
 Big refactoring, now has a class handling the thinking.
 #2 Added includeWww option (ON by default) which optionally also looks out for www.* hosts.
 #3 Added support for http_host_aliases context setting, which allows different http_host values routing to one context.
