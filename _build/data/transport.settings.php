@@ -1,7 +1,7 @@
 <?php
 $s = array(
-    'cookie.duration' => 2592000,
-    'cookie.name' => 'cookieList',
+    'includeWww' => true,
+    'defaultContext' => 'web',
 );
 
 $settings = array();
@@ -12,14 +12,13 @@ foreach ($s as $key => $value) {
     else { $type = 'textfield'; }
 
     $area = 'default';
-    $settings['cookielist.'.$key] = $modx->newObject('modSystemSetting');
-    $settings['cookielist.'.$key]->set('key', 'cookielist.'.$key);
-    $settings['cookielist.'.$key]->fromArray(array(
-        'value' => $value,
-        'xtype' => $type,
-        'namespace' => 'cookielist',
-        'area' => $area
-    ));
+
+    $settings['contextrouter.'.$key] = $modx->newObject('modSystemSetting');
+    $settings['contextrouter.'.$key]->set('key', 'contextrouter.'.$key);
+    $settings['contextrouter.'.$key]->set('namespace', 'contextrouter');
+    $settings['contextrouter.'.$key]->set('value', $value);
+    $settings['contextrouter.'.$key]->set('xtype', $type);
+    $settings['contextrouter.'.$key]->set('area', $area);
 }
 
 return $settings;

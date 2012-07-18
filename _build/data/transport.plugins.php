@@ -6,7 +6,7 @@ $plugins[0] = $modx->newObject('modPlugin');
 $plugins[0]->set('id',1);
 $plugins[0]->set('name','ContextRouter');
 $plugins[0]->set('description','ContextRouter is a simple plug-and-play plugin allowing you to use different contexts, and, based on the http_host context settings you need to set anyway, it routes your front-end requests as required.');
-$plugins[0]->set('plugincode', getSnippetContent($sources['root'] . 'ContextRouter.plugin.php'));
+$plugins[0]->set('plugincode', getSnippetContent($sources['plugins'] . 'contextrouter.plugin.php'));
 $plugins[0]->set('category', 0);
 
 $events = array();
@@ -28,6 +28,12 @@ $events['OnContextRemove']->fromArray(array(
     'priority' => 0,
     'propertyset' => 0,
 ),'',true,true);
+$events['OnSiteRefresh']= $modx->newObject('modPluginEvent');
+$events['OnSiteRefresh']->fromArray(array(
+    'event' => 'OnSiteRefresh',
+    'priority' => 0,
+    'propertyset' => 0,
+),'',true,true);
 
 if (is_array($events) && !empty($events)) {
     $plugins[0]->addMany($events);
@@ -39,4 +45,4 @@ unset($events);
 
 return $plugins;
 
-?>
+

@@ -22,7 +22,7 @@ set_time_limit(0);
 /* define package */
 define('PKG_NAME','ContextRouter');
 define('PKG_NAME_LOWER',strtolower(PKG_NAME));
-define('PKG_VERSION','1.0.0');
+define('PKG_VERSION','1.1.0');
 define('PKG_RELEASE','pl');
 
 $root = dirname(dirname(__FILE__)).'/';
@@ -36,7 +36,7 @@ $sources= array (
     'plugins' => $root.'core/components/'.PKG_NAME_LOWER.'/elements/plugins/',
     'snippets' => $root.'core/components/'.PKG_NAME_LOWER.'/elements/snippets/',
     'lexicon' => $root . 'core/components/'.PKG_NAME_LOWER.'/lexicon/',
-    'docs' => $root.'docs/',
+    'docs' => $root.'core/components/'.PKG_NAME_LOWER.'/docs/',
     'model' => $root.'core/components/'.PKG_NAME_LOWER.'/model/',
 );
 unset($root);
@@ -85,6 +85,21 @@ foreach ($plugins as $plugin) {
 $modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($plugins).' plugins.'); flush();
 unset($plugins,$plugin,$attributes);
 
+/* Settings */
+$settings = include_once $sources['data'].'transport.settings.php';
+$attributes= array(
+    xPDOTransport::UNIQUE_KEY => 'key',
+    xPDOTransport::PRESERVE_KEYS => true,
+    xPDOTransport::UPDATE_OBJECT => false,
+);
+if (!is_array($settings)) { $modx->log(modX::LOG_LEVEL_FATAL,'Adding settings failed.'); }
+foreach ($settings as $setting) {
+    $vehicle = $builder->createVehicle($setting,$attributes);
+    $builder->putVehicle($vehicle);
+}
+$modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($settings).' system settings.'); flush();
+unset($settings,$setting,$attributes);
+
 /* create category vehicle */
 $attr = array(
     xPDOTransport::UNIQUE_KEY => 'category',
@@ -100,6 +115,11 @@ $attr = array(
     )
 );
 $vehicle = $builder->createVehicle($category,$attr);
+$vehicle->resolve('file',array(
+    'source' => $sources['source_core'],
+    'target' => "return MODX_CORE_PATH . 'components/';",
+));
+$modx->log(modX::LOG_LEVEL_INFO,'Packaged in resolvers.'); flush();
 $builder->putVehicle($vehicle);
 
 /* now pack in the license file, readme and setup options */
@@ -122,4 +142,4 @@ $totalTime = sprintf("%2.4f s", $totalTime);
 
 $modx->log(modX::LOG_LEVEL_INFO,"\n<br />Package Built.<br />\nExecution time: {$totalTime}\n");
 
-?>
+
