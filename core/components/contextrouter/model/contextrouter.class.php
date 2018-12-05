@@ -10,7 +10,7 @@ class ContextRouter {
      * @param \modX $modx
      * @param array $config
      */
-    function __construct(modX &$modx,array $config = array()) {
+    function __construct(modX $modx,array $config = array()) {
         $this->modx =& $modx;
         $this->includeWww = $modx->getOption('contextrouter.includeWww', null, true);
         $this->config = $config;
