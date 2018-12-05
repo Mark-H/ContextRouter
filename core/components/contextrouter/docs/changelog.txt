@@ -5,6 +5,7 @@ Released on 2018-12-05
 - Work around modContext ACLs to prevent sites from becoming inaccessible when a non-authorized user causes the cache to be cleared [#5]
 - Allow using OnMODXInit instead of OnHandleRequest event
 - Minor codes style tweaks
+- License updated to MIT instead of GPL v2
 
 ContextRouter 1.1.0-pl
 ----------------------
