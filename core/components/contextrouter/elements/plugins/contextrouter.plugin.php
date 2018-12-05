@@ -8,6 +8,7 @@ $event = $modx->event->name;
 switch ($event) {
     default:
     case 'OnHandleRequest':
+    case 'OnMODXInit':
         if ($modx->context->key == 'mgr') return;
 
         $routes = $modx->cacheManager->get('contextrouter', array());
@@ -15,8 +16,11 @@ switch ($event) {
         if (!is_array($routes)) {
             /* @var ContextRouter $contextRouter */
             $core_path = $modx->getOption('contextrouter.core_path', null, $modx->getOption('core_path').'components/contextrouter/') . 'model/';
-            $contextRouter = $modx->getService('contextrouter','ContextRouter', $core_path, $scriptProperties);
-            if (!$contextRouter) { $modx->log(modX::LOG_LEVEL_ERROR,'Error instantiating ContextRouter class from ' . $core_path); return; }
+            $contextRouter =& $modx->getService('contextrouter','ContextRouter', $core_path, $scriptProperties);
+            if (!$contextRouter) {
+                $modx->log(modX::LOG_LEVEL_ERROR,'Error instantiating ContextRouter class from ' . $core_path);
+                return;
+            }
 
             $contextRouter->buildRoutesCache();
             $routes = $contextRouter->getRoutes();
@@ -36,8 +40,11 @@ switch ($event) {
     case 'OnSiteRefresh':
         /* @var ContextRouter $contextRouter */
         $core_path = $modx->getOption('contextrouter.core_path', null, $modx->getOption('core_path').'components/contextrouter/') . 'model/';
-        $contextRouter = $modx->getService('contextrouter','ContextRouter', $core_path, $scriptProperties);
-        if (!$contextRouter) { $modx->log(modX::LOG_LEVEL_ERROR,'Error instantiating ContextRouter class from ' . $core_path); return; }
+        $contextRouter =& $modx->getService('contextrouter','ContextRouter', $core_path, $scriptProperties);
+        if (!$contextRouter) {
+            $modx->log(modX::LOG_LEVEL_ERROR,'Error instantiating ContextRouter class from ' . $core_path);
+            return;
+        }
 
         $contextRouter->buildRoutesCache();
         break;
