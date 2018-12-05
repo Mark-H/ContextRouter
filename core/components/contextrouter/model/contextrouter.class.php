@@ -47,7 +47,6 @@ class ContextRouter {
             $ctxSetting = $this->modx->getObject('modContextSetting',array('context_key' => $key, 'key' => 'http_host'));
             if ($ctxSetting instanceof modContextSetting && ($ctxSetting->get('value') != '')) {
                 $host = $ctxSetting->get('value');
-                $key = $ctx->get('key');
                 $this->addToRoutesArray($host, $key);
             }
 
@@ -55,7 +54,6 @@ class ContextRouter {
             $ctxSetting = $this->modx->getObject('modContextSetting',array('context_key' => $key, 'key' => 'http_host_aliases'));
             if ($ctxSetting instanceof modContextSetting && ($ctxSetting->get('value') != '')) {
                 $hosts = explode(',', $ctxSetting->get('value'));
-                $key = $ctx->get('key');
                 foreach ($hosts as $host) {
                     $this->addToRoutesArray($host, $key);
                 }
@@ -69,7 +67,7 @@ class ContextRouter {
             if ($this->includeWww && !$skipWww) {
                 if (substr($host, 0, 4) == 'www.') $host = substr($host, 4);
                 if (isset($this->routes['www.' . $host]) && ($this->routes['www.' . $host] != $ctx)) {
-                    $this->modx->log(modX::LOG_LEVEL_ERROR,'[ContextRouter] You may have conflicting http_host definitions. Overwriting context '. $this->routes['www.' . $host] . ' with ' . $ctx . ' for host www.' . $host);
+                    $this->modx->log(modX::LOG_LEVEL_ERROR,'[ContextRouter] You may have conflicting http_host definitions for the www subdomain. Overwriting context '. $this->routes['www.' . $host] . ' with ' . $ctx . ' for host www.' . $host);
                 }
                 $this->routes['www.' . $host] = $ctx;
             }
