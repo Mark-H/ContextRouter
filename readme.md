@@ -1,5 +1,4 @@
-++  ContextRouter
-++++++++++++++++++++
+## ContextRouter
 
 ContextRouter is a simple plug-and-play plugin allowing you to route different contexts based on the http_host context
 settings that you need to set anyway.
