@@ -1,17 +1,23 @@
-- Work around modContext ACLs to prevent sites from becoming inaccessible when a non-authorized user causes the cache to be cleared
+ContextRouter 1.2.0-pl
+----------------------
+Released on 2018-12-05
+
+- Work around modContext ACLs to prevent sites from becoming inaccessible when a non-authorized user causes the cache to be cleared [#5]
 - Allow using OnMODXInit instead of OnHandleRequest event
 - Minor codes style tweaks
 
-++  ContextRouter 1.1.0-pl
-++  Released: 2012-07-18
-++++++++++++++++++++++++++++
+ContextRouter 1.1.0-pl
+----------------------
+Released on 2012-07-18
+
 (pl2) Fix unproperly prefixed system settings.
 Big refactoring, now has a class handling the thinking.
 #2 Added includeWww option (ON by default) which optionally also looks out for www.* hosts.
 #3 Added support for http_host_aliases context setting, which allows different http_host values routing to one context.
 
 
-++  ContextRouter 1.0.0-pl
-++  Released: 2011-11-18
-++++++++++++++++++++++++++++
+ContextRouter 1.0.0-pl
+----------------------
+Released on 2011-11-18
+
 First release.
