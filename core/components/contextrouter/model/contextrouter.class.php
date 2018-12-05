@@ -36,12 +36,21 @@ class ContextRouter {
             $this->addToRoutesArray($global, 'web');
         }
 
-        $ctxs = $this->modx->getCollection('modContext',array(
+        $c = $this->modx->newQuery('modContext');
+        $c->select($this->modx->getSelectColumns('modContext', 'modContext', '', ['key']));
+        $c->where(array(
             'key:!=' => 'mgr'
         ));
-        /* @var modContext $ctx */
-        foreach ($ctxs as $ctx) {
-            $key = $ctx->get('key');
+        $c->prepare();
+
+        $contexts = array();
+        $stmt = $this->modx->query($c->toSQL());
+        if ($stmt) {
+            $contexts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        foreach ($contexts as $ctx) {
+            $key = $ctx['key'];
 
             /* @var modContextSetting $ctxSetting */
             $ctxSetting = $this->modx->getObject('modContextSetting',array('context_key' => $key, 'key' => 'http_host'));
@@ -59,6 +68,7 @@ class ContextRouter {
                 }
             }
         }
+
         $this->modx->cacheManager->set($this->cacheKey, $this->routes, 0, $this->cacheOptions);
     }
 

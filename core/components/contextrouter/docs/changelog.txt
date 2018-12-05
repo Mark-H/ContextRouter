@@ -1,3 +1,4 @@
+- Work around modContext ACLs to prevent sites from becoming inaccessible when a non-authorized user causes the cache to be cleared
 - Allow using OnMODXInit instead of OnHandleRequest event
 - Minor codes style tweaks
 
