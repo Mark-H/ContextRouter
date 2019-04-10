@@ -2,6 +2,8 @@
 $s = array(
     'includeWww' => true,
     'defaultContext' => 'web',
+    'redirectAliasToHttpHost' => false,
+    'redirectResponseHeader'  => 'HTTP/1.1 301 Moved Permanently'
 );
 
 $settings = array();

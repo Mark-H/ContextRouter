@@ -46,6 +46,18 @@ switch ($event) {
 
         if (array_key_exists($host, $routes)) {
             $modx->switchContext($routes[$host]);
+            
+    		if((boolean) $modx->getOption('contextrouter.redirectAliasToHttpHost',null,false)){
+			    $http_host = $modx->getOption('http_host',null,$host);
+				$responseCode = $modx->getOption('contextrouter.redirectResponseHeader',null,'HTTP/1.1 301 Moved Permanently');
+				if($host !== $http_host){
+				    $options = array(
+					    'responseCode' => $responseCode
+					);
+				    $modx->sendRedirect('http://' . $http_host . $_SERVER['REQUEST_URI'],$options);
+				}
+			}
+            
         }
         break;
 
